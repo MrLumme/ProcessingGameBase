@@ -4,6 +4,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.Properties;
 
 import lumCode.interactables.entities.Button;
@@ -183,10 +186,14 @@ public class Main extends PApplet {
 
 	public static void saveProperties() {
 		try {
-			prop.setProperty("master_vol", String.format("%.3f", SoundKeeper.getMasterVolume()));
-			prop.setProperty("effect_vol", String.format("%.3f", SoundKeeper.getEffectVolume()));
-			prop.setProperty("music_vol", String.format("%.3f", SoundKeeper.getMusicVolume()));
-			prop.setProperty("voice_vol", String.format("%.3f", SoundKeeper.getVoiceVolume()));
+			DecimalFormatSymbols dc = new DecimalFormatSymbols();
+			dc.setDecimalSeparator('.');
+			NumberFormat format = new DecimalFormat("0.000", dc);
+
+			prop.setProperty("master_vol", format.format(SoundKeeper.getMasterVolume()));
+			prop.setProperty("effect_vol", format.format(SoundKeeper.getEffectVolume()));
+			prop.setProperty("music_vol", format.format(SoundKeeper.getMusicVolume()));
+			prop.setProperty("voice_vol", format.format(SoundKeeper.getVoiceVolume()));
 
 			prop.store(new FileWriter(Settings.PROPERTIES_PATH), "saved-" + System.currentTimeMillis());
 		} catch (IOException e) {
