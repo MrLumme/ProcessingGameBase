@@ -3,7 +3,8 @@ package lumCode.processingGameBase;
 public class Settings {
 
 	public static final String PROPERTIES_PATH = "resources/config.properties";
-	public static final String AUDIO_PATH = "resources/sound";
+	public static final String AUDIO_PATH = "resources/audio/";
+	public static final String FONT_PATH = "resources/font/";
 
 	public static final int TICK_SPEED = 100;
 	public static final int FRAME_RATE = 60;
