@@ -32,7 +32,7 @@ public class Main extends PApplet {
 	// --------------
 
 	public static boolean doTick = false;
-	public static Properties prop;
+	public static Properties prop = new Properties();
 
 	// Example - Start
 	private static int buttonClicks = 0;
