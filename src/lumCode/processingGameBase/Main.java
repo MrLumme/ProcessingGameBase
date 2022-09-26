@@ -1,5 +1,11 @@
 package lumCode.processingGameBase;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Properties;
+
 import lumCode.interactables.entities.Button;
 import lumCode.interactables.entities.Label;
 import lumCode.processingGameBase.keys.Input;
@@ -7,6 +13,7 @@ import lumCode.processingGameBase.keys.InputTracker;
 import lumCode.processingGameBase.sound.SoundKeeper;
 import lumCode.processingGameBase.sound.types.SFXType;
 import lumCode.processingGameBase.time.TimeKeeper;
+import lumCode.utils.ExMath;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PFont;
@@ -25,6 +32,7 @@ public class Main extends PApplet {
 	// --------------
 
 	public static boolean doTick = false;
+	public static Properties prop;
 
 	// Example - Start
 	private static int buttonClicks = 0;
@@ -39,6 +47,7 @@ public class Main extends PApplet {
 
 	public static void main(String[] args) {
 		main("lumCode.processingGameBase.Main");
+		saveProperties();
 	}
 
 	// --------
@@ -59,6 +68,8 @@ public class Main extends PApplet {
 	public void setup() {
 		SoundKeeper sk = SoundKeeper.getInstance();
 		TimeKeeper tk = TimeKeeper.getInstance();
+
+		loadProperties();
 
 		// Example - Start
 		font = loadFont(Settings.FONT_PATH + "default.vlw");
@@ -145,5 +156,42 @@ public class Main extends PApplet {
 	// ---------
 	// UTILITIES
 	// ---------
+
+	public static void loadProperties() {
+		try {
+			prop.load(new FileReader(Settings.PROPERTIES_PATH));
+
+			SoundKeeper.setMasterVolume(
+					ExMath.clamp(Double.parseDouble(prop.getProperty("master_vol", "" + SoundKeeper.getMasterVolume())),
+							0.000, 1.000));
+			SoundKeeper.setEffectVolume(ExMath.clamp(
+					Double.parseDouble(prop.getProperty("effects_vol", "" + SoundKeeper.getEffectVolume())), 0.000,
+					1.000));
+			SoundKeeper.setMusicVolume(
+					ExMath.clamp(Double.parseDouble(prop.getProperty("music_vol", "" + SoundKeeper.getMusicVolume())),
+							0.000, 1.000));
+			SoundKeeper.setVoiceVolume(
+					ExMath.clamp(Double.parseDouble(prop.getProperty("voice_vol", "" + SoundKeeper.getVoiceVolume())),
+							0.000, 1.000));
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void saveProperties() {
+		try {
+			prop.setProperty("master_vol", String.format("%.3f", SoundKeeper.getMasterVolume()));
+			prop.setProperty("effect_vol", String.format("%.3f", SoundKeeper.getEffectVolume()));
+			prop.setProperty("music_vol", String.format("%.3f", SoundKeeper.getMusicVolume()));
+			prop.setProperty("voice_vol", String.format("%.3f", SoundKeeper.getVoiceVolume()));
+
+			prop.store(new FileWriter(Settings.PROPERTIES_PATH), "saved-" + System.currentTimeMillis());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 }
