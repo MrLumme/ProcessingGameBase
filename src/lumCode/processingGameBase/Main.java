@@ -50,7 +50,6 @@ public class Main extends PApplet {
 
 	public static void main(String[] args) {
 		main("lumCode.processingGameBase.Main");
-		saveProperties();
 	}
 
 	// --------
@@ -103,6 +102,16 @@ public class Main extends PApplet {
 		label.setText("Clicked: " + buttonClicks);
 		label.draw();
 		// Example - End
+	}
+
+	// ----
+	// EXIT
+	// ----
+
+	@Override
+	public void exit() {
+		super.exit();
+		saveProperties();
 	}
 
 	// -----
