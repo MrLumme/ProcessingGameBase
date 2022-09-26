@@ -187,7 +187,7 @@ public final class SoundKeeper extends Thread {
 	 */
 
 	public static void playSFX(SFXType type) {
-		playSFX(type, 0.6);
+		playSFX(type, 1.0);
 	}
 
 	/**
