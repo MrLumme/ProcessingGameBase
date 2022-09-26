@@ -65,7 +65,7 @@ public class Main extends PApplet {
 		button = new Button(SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT / 2 - 25, 100, 50, this, "Press me", font) {
 			@Override
 			public void action() {
-				SoundKeeper.playSFX(SFXType.BUTTON);
+				SoundKeeper.playEffect(SFXType.BUTTON);
 				buttonClicks++;
 			}
 		};

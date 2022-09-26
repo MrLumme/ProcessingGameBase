@@ -28,8 +28,7 @@ public final class SoundKeeper extends Thread {
 
 	private static double masterVolume = 0.5;
 	private static double musicVolume = 1.0;
-	private static double ambienceVolume = 1.0;
-	private static double sfxVolume = 1.0;
+	private static double effectsVolume = 1.0;
 	private static double voiceVolume = 1.0;
 
 	private static final ArrayList<Sound> queue = new ArrayList<>();
@@ -159,7 +158,7 @@ public final class SoundKeeper extends Thread {
 	 * @param type
 	 */
 
-	public static void playSFX(SFXType type, double vol) {
+	public static void playEffect(SFXType type, double vol) {
 		if (!muted) {
 			Iterator<AudioPlayer> it = effects.iterator();
 			while (it.hasNext()) {
@@ -173,7 +172,7 @@ public final class SoundKeeper extends Thread {
 			}
 			if (effects.size() < Settings.SFX_LIMIT) {
 				AudioPlayer sfx = new AudioPlayer(SFXType.getFile(type));
-				sfx.setVol(vol * masterVolume * sfxVolume);
+				sfx.setVol(vol * masterVolume * effectsVolume);
 				sfx.start();
 				effects.add(sfx);
 			}
@@ -186,8 +185,8 @@ public final class SoundKeeper extends Thread {
 	 * @param type
 	 */
 
-	public static void playSFX(SFXType type) {
-		playSFX(type, 1.0);
+	public static void playEffect(SFXType type) {
+		playEffect(type, 1.0);
 	}
 
 	/**
@@ -223,12 +222,12 @@ public final class SoundKeeper extends Thread {
 		SoundKeeper.musicVolume = musicVolume;
 	}
 
-	public static double getSfxVolume() {
-		return sfxVolume;
+	public static double getEffectVolume() {
+		return effectsVolume;
 	}
 
-	public static void setSfxVolume(double sfxVolume) {
-		SoundKeeper.sfxVolume = sfxVolume;
+	public static void setEffectVolume(double sfxVolume) {
+		SoundKeeper.effectsVolume = sfxVolume;
 	}
 
 	public static double getVoiceVolume() {
