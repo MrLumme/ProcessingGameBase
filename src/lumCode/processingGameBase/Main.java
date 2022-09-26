@@ -2,6 +2,9 @@ package lumCode.processingGameBase;
 
 import lumCode.processingGameBase.keys.Input;
 import lumCode.processingGameBase.keys.InputTracker;
+import lumCode.processingGameBase.sound.SoundKeeper;
+import lumCode.processingGameBase.sound.types.SFXType;
+import lumCode.processingGameBase.time.TimeKeeper;
 import processing.core.PApplet;
 import processing.core.PConstants;
 
@@ -40,7 +43,12 @@ public class Main extends PApplet {
 
 	@Override
 	public void setup() {
+		SoundKeeper sk = SoundKeeper.getInstance();
+		TimeKeeper tk = TimeKeeper.getInstance();
 
+
+		sk.start();
+		tk.start();
 	}
 
 	// ----
