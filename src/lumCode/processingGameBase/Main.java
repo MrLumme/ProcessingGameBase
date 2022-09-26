@@ -68,6 +68,8 @@ public class Main extends PApplet {
 
 	@Override
 	public void setup() {
+		frameRate(Settings.FRAME_RATE);
+
 		SoundKeeper sk = SoundKeeper.getInstance();
 		TimeKeeper tk = TimeKeeper.getInstance();
 
