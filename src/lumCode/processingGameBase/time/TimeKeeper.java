@@ -81,7 +81,7 @@ public final class TimeKeeper extends Thread {
 		}
 	}
 
-	private void checkGame() {
+	private static void checkGame() {
 		// TODO Add all time dependent stuff, game logic, and calculations.
 	}
 
