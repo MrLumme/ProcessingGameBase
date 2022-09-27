@@ -62,9 +62,6 @@ public final class TimeKeeper extends Thread {
 
 			long tick = Settings.TICK_SPEED - (System.currentTimeMillis() - start);
 			if (tick > 0) {
-
-				// Slow update
-
 				try {
 					Thread.sleep(tick);
 				} catch (InterruptedException e) {
