@@ -1,6 +1,7 @@
 package lumCode.processingGameBase.time;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import lumCode.processingGameBase.Main;
 import lumCode.processingGameBase.Settings;
@@ -83,6 +84,16 @@ public final class TimeKeeper extends Thread {
 
 	private static void checkGame() {
 		// TODO Add all time dependent stuff, game logic, and calculations.
+	}
+
+	public static synchronized void clearDoneAlarms() {
+		Iterator<Alarm> it = alarms.iterator();
+		while (it.hasNext()) {
+			Alarm a = it.next();
+			if (a.isDone() && (!(a instanceof AlarmFunction) || !((AlarmFunction) a).isRepeat())) {
+				it.remove();
+			}
+		}
 	}
 
 	// -------------------
