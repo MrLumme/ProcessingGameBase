@@ -22,6 +22,7 @@ public final class TimeKeeper extends Thread {
 	private static final ArrayList<Alarm> alarms = new ArrayList<>();
 
 	private static boolean paused = false;
+	private static boolean autoClearAlarms = false;
 
 	/**
 	 * Constructor. Sets the instance to be a daemon thread.
@@ -79,6 +80,9 @@ public final class TimeKeeper extends Thread {
 	private static synchronized void checkAlarms() {
 		for (Alarm a : alarms) {
 			a.update();
+		}
+		if (autoClearAlarms) {
+			clearDoneAlarms();
 		}
 	}
 
@@ -157,5 +161,25 @@ public final class TimeKeeper extends Thread {
 
 	public static void setPaused(boolean paused) {
 		TimeKeeper.paused = paused;
+	}
+
+	/**
+	 * Returns whether or not TimeKeeper will clear finished alarms automatically
+	 * 
+	 * @return
+	 */
+
+	public static boolean isAutoClearAlarms() {
+		return autoClearAlarms;
+	}
+
+	/**
+	 * Sets whether or not TimeKeeper will clear finished alarms automatically
+	 * 
+	 * @param autoClearAlarms
+	 */
+
+	public static void setAutoClearAlarms(boolean autoClearAlarms) {
+		TimeKeeper.autoClearAlarms = autoClearAlarms;
 	}
 }
