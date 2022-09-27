@@ -11,6 +11,7 @@ package lumCode.processingGameBase.time;
  */
 
 public abstract class AlarmFunction extends Alarm {
+	private boolean repeat;
 
 	/**
 	 * Constructor. Length is in milliseconds.
@@ -33,6 +34,9 @@ public abstract class AlarmFunction extends Alarm {
 			super.update();
 			if (!t && isDone()) {
 				function();
+				if (repeat) {
+					start();
+				}
 			}
 		}
 	}
@@ -42,4 +46,24 @@ public abstract class AlarmFunction extends Alarm {
 	 */
 
 	public abstract void function();
+
+	/**
+	 * Returns whether or not the AlarmFunction repeats when it is finished.
+	 * 
+	 * @return
+	 */
+
+	public boolean isRepeat() {
+		return repeat;
+	}
+
+	/**
+	 * Sets whether or not the AlarmFunction repeats when it is finished.
+	 * 
+	 * @param repeat
+	 */
+
+	public void setRepeat(boolean repeat) {
+		this.repeat = repeat;
+	}
 }
