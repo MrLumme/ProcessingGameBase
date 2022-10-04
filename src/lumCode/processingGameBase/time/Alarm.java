@@ -38,6 +38,7 @@ public class Alarm {
 	public void start() {
 		start = TimeKeeper.getTime();
 		done = false;
+		paused = false;
 		active = true;
 	}
 
@@ -48,6 +49,7 @@ public class Alarm {
 	public void stop() {
 		start = 0;
 		active = false;
+		paused = false;
 	}
 
 	/**
@@ -55,7 +57,7 @@ public class Alarm {
 	 */
 
 	public void update() {
-		if (active && TimeKeeper.getTime() >= (start + duration)) {
+		if (active && !paused && TimeKeeper.getTime() >= (start + duration)) {
 			done = true;
 			stop();
 		}
