@@ -20,6 +20,7 @@ public final class TimeKeeper extends Thread {
 	private static TimeKeeper instance = null;
 
 	private static final ArrayList<Alarm> alarms = new ArrayList<>();
+	private static final ArrayList<Trigger> triggers = new ArrayList<>();
 
 	private static boolean paused = false;
 	private static boolean autoClearAlarms = false;
@@ -59,6 +60,7 @@ public final class TimeKeeper extends Thread {
 			long start = System.currentTimeMillis();
 			if (Main.doTick && !paused) {
 				checkAlarms();
+				checkTriggers();
 				checkGame();
 			}
 
@@ -83,6 +85,21 @@ public final class TimeKeeper extends Thread {
 		}
 		if (autoClearAlarms) {
 			clearDoneAlarms();
+		}
+	}
+
+	/**
+	 * Checks if any trigger condition has been met.
+	 */
+
+	private static synchronized void checkTriggers() {
+		Iterator<Trigger> it = triggers.iterator();
+		while (it.hasNext()) {
+			Trigger act = it.next();
+			if (act.condition()) {
+				act.action();
+				it.remove();
+			}
 		}
 	}
 
@@ -118,7 +135,7 @@ public final class TimeKeeper extends Thread {
 	}
 
 	/**
-	 * Adds a Alarm to the event list.
+	 * Adds an Alarm to the event list.
 	 * 
 	 * @param event
 	 */
@@ -128,13 +145,33 @@ public final class TimeKeeper extends Thread {
 	}
 
 	/**
-	 * Removes a Alarm from the event list
+	 * Removes an Alarm from the event list
 	 * 
 	 * @param event
 	 */
 
 	public static synchronized void removeAlarm(Alarm event) {
 		alarms.remove(event);
+	}
+
+	/**
+	 * Adds a Trigger to the triggers list.
+	 * 
+	 * @param event
+	 */
+
+	public static synchronized void addTrigger(Trigger trigger) {
+		triggers.add(trigger);
+	}
+
+	/**
+	 * Removes a Trigger from the triggers list
+	 * 
+	 * @param event
+	 */
+
+	public static synchronized void removeTrigger(Trigger trigger) {
+		triggers.remove(trigger);
 	}
 
 	/**
