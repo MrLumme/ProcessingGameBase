@@ -105,6 +105,10 @@ public class Main extends PApplet {
 		button.draw();
 		label.setText("Clicked: " + buttonClicks);
 		label.draw();
+
+		stroke(255);
+		fill(Colors.mix(Colors.RED, Colors.GREEN, 0.5));
+		rect((float) (SCREEN_WIDTH / 2.0 - 50), (float) (SCREEN_HEIGHT / 2.0 + 100), 100, 50);
 		// Example - End
 	}
 
@@ -194,8 +198,6 @@ public class Main extends PApplet {
 					ExMath.clamp(Double.parseDouble(prop.getProperty("voice_vol", "" + SoundKeeper.getVoiceVolume())),
 							0.000, 1.000));
 
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
