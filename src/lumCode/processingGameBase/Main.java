@@ -29,6 +29,7 @@ public class Main extends PApplet {
 
 	public static final int SCREEN_WIDTH = 640;
 	public static final int SCREEN_HEIGHT = 480;
+	private static PApplet instance;
 
 	// --------------
 	// GAME VARIABLES
@@ -68,6 +69,7 @@ public class Main extends PApplet {
 
 	@Override
 	public void setup() {
+		instance = this;
 		frameRate(Settings.FRAME_RATE);
 
 		SoundKeeper sk = SoundKeeper.getInstance();
@@ -170,6 +172,10 @@ public class Main extends PApplet {
 	// ---------
 	// UTILITIES
 	// ---------
+
+	public static PApplet instance() {
+		return instance;
+	}
 
 	public static void loadProperties() {
 		try {
