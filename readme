@@ -1,3 +1,8 @@
-Notes on forking:
+::: What is this? :::
+This is a template for interactive GUI-driven programs in Java, using Processing as the graphical library.
+It provides many functions and objects to control an application, and uses my Interaction library, which provides simple, but customizable buttons, sliders and other interaction elements.
+There is an in-built sound system, input tracking system and a time control system.
+It is based on my ConsoleCommander game.
 
-1. Remember to change project name in .project file (Under <projectDescription> tag)
+::: How to use it? :::
+To use this, start by looking main.java, where a simple example have been added. 
