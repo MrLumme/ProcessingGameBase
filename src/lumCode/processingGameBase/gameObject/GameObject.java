@@ -1,26 +1,13 @@
-public class GameObject {
-	private static int idCounter = 0;
-	
-	private PApplet p;
-	
-	public final int id;
-	public int depth;
+public abstract class GameObject {
 	public float x, y;
 	public Sprite sprite;
 
-  public GameObject() {
-		id = idCounter;
-		idCounter++;
-		p = Main.instance()
-  }
-
-	public GameObject(float x, float y) {
-		this();
+	protected GameObject(float x, float y) {
 		this.x = x;
 		this.y = y;
 	}
 
-	public GameObject(float x, float y, Sprite sprite) {
+	protected GameObject(float x, float y, Sprite sprite) {
 		this(x, y);
 		this.sprite = sprite;
 	}
