@@ -1,3 +1,11 @@
+package lumCode.processingGameBase.sprite;
+
+import lumCode.processingGameBase.Main;
+import processing.core.PApplet;
+import processing.core.PImage;
+
+import java.io.File;
+
 public class Sprite {
 	private static int idCounter = 0;
 	
@@ -14,7 +22,7 @@ public class Sprite {
 	private Sprite() {
 		id = idCounter;
 		idCounter++;
-		p = Main.instance()
+		p = Main.instance();
 	}
 
 	public Sprite(PImage image) {
@@ -30,7 +38,7 @@ public class Sprite {
 
 	public Sprite(File image) {
 		this();
-		this.image = p.loadImage(image);
+		this.image = p.loadImage(image.getAbsolutePath());
 	}
 
 	public Sprite(float w, float h, File image) {
@@ -45,9 +53,9 @@ public class Sprite {
   
   public void drawAt(float x, float y) {
     if (w > 0 && h > 0) {
-      p.image(image, x, y, w, h)
+      p.image(image, x, y, w, h);
     } else {
-      p.image(image, x, y)
+      p.image(image, x, y);
     }
   }
 

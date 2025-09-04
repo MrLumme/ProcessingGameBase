@@ -1,3 +1,7 @@
+package lumCode.processingGameBase.gameObject;
+
+import lumCode.processingGameBase.sprite.Sprite;
+
 public abstract class GameObject {
 	public float x, y;
 	public Sprite sprite;
