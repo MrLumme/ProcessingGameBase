@@ -1,4 +1,4 @@
-public Class GameObject {
+public class GameObject {
 	private static int idCounter = 0;
 	
 	private PApplet p;
