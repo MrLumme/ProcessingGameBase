@@ -1,6 +1,5 @@
 package lumCode.processingGameBase;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,8 +12,9 @@ import lumCode.interactables.entities.Button;
 import lumCode.interactables.entities.Label;
 import lumCode.processingGameBase.keys.Input;
 import lumCode.processingGameBase.keys.InputTracker;
+import lumCode.processingGameBase.resource.ResourceCatalog;
 import lumCode.processingGameBase.sound.SoundKeeper;
-import lumCode.processingGameBase.sound.types.SFXType;
+import lumCode.processingGameBase.sound.SFXType;
 import lumCode.processingGameBase.time.TimeKeeper;
 import lumCode.utils.ExMath;
 import processing.core.PApplet;
@@ -75,7 +75,16 @@ public class Main extends PApplet {
 		SoundKeeper sk = SoundKeeper.getInstance();
 		TimeKeeper tk = TimeKeeper.getInstance();
 
+		ResourceCatalog.load();
 		loadProperties();
+
+		while (!ResourceCatalog.allReady()) {
+			try {
+				Thread.currentThread().sleep(100);
+			} catch (InterruptedException e) {
+				throw new RuntimeException(e);
+			}
+		}
 
 		// Example - Start
 		font = loadFont(Settings.FONT_PATH + "default.vlw");

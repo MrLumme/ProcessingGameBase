@@ -1,13 +1,23 @@
 package lumCode.processingGameBase.sound;
 
+import lumCode.processingGameBase.resource.Resource;
+
 import java.io.File;
 
-public abstract class Sound {
+public abstract class Sound extends Resource {
 	private boolean playing;
 
+	// -----------
+	// CONSTRUCTOR
+	// -----------
+
 	public Sound() {
-		setPlaying(false);
+		super();
 	}
+
+	// --------
+	// UTIILITY
+	// --------
 
 	public abstract File[] getPlaySetup();
 
@@ -17,5 +27,14 @@ public abstract class Sound {
 
 	public void setPlaying(boolean playing) {
 		this.playing = playing;
+	}
+
+	// --------
+	// INTERNAL
+	// --------
+
+	@Override
+	protected boolean isReady() {
+		return true;
 	}
 }

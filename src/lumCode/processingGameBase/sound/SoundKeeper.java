@@ -6,7 +6,6 @@ import java.util.Iterator;
 
 import lumCode.processingGameBase.Main;
 import lumCode.processingGameBase.Settings;
-import lumCode.processingGameBase.sound.types.SFXType;
 
 /**
  * Static class to manage sounds. Extends Thread.
@@ -55,7 +54,7 @@ public final class SoundKeeper extends Thread {
 			// Do nothing
 		}
 
-		File sd = new File(Settings.AUDIO_PATH);
+		File sd = new File(Settings.SOUND_PATH);
 		if (sd.exists()) {
 			if (!muted) {
 				while (!Main.doTick) {
@@ -142,7 +141,7 @@ public final class SoundKeeper extends Thread {
 	/**
 	 * Adds a Sound to the correct queue
 	 * 
-	 * @param warning
+	 * @param sound
 	 */
 
 	public static void addSoundToQueue(Sound sound) {
@@ -155,7 +154,7 @@ public final class SoundKeeper extends Thread {
 	 * Plays a given sound effect type at a given volume.
 	 * 
 	 * @param type
-	 * @param type
+	 * @param vol
 	 */
 
 	public static void playEffect(SFXType type, double vol) {
