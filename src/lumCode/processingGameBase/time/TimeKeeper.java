@@ -3,6 +3,7 @@ package lumCode.processingGameBase.time;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import lumCode.processingGameBase.Keeper;
 import lumCode.processingGameBase.Main;
 import lumCode.processingGameBase.Settings;
 
@@ -16,31 +17,29 @@ import lumCode.processingGameBase.Settings;
  * @since 20-09-2019
  */
 
-public final class TimeKeeper extends Thread {
+public final class TimeKeeper extends Keeper {
 	private static TimeKeeper instance = null;
 
 	private static final ArrayList<Alarm> alarms = new ArrayList<>();
 	private static final ArrayList<Trigger> triggers = new ArrayList<>();
 
-	private static boolean paused = false;
 	private static boolean autoClearAlarms = false;
+
+	// --------------
+	// ADMINISTRATION
+	// --------------
 
 	/**
 	 * Constructor. Sets the instance to be a daemon thread.
 	 */
 
 	private TimeKeeper() {
-		setDaemon(true);
-		setName("TimeKeeper");
+		super("Time");
 	}
-
-	// ---------
-	// FUNCTIONS
-	// ---------
 
 	/**
 	 * The method that initializes the instance.
-	 * 
+	 *
 	 * @return TimeKeeper
 	 */
 
@@ -51,28 +50,27 @@ public final class TimeKeeper extends Thread {
 	}
 
 	/**
-	 * The method running all the logic.
+	 * The method used to get the TimeKeeper.
+	 *
+	 * @return TimeKeeper
 	 */
 
-	@Override
-	public void run() {
-		while (true) {
-			long start = System.currentTimeMillis();
-			if (Main.doTick && !paused) {
-				checkAlarms();
-				checkTriggers();
-				checkGame();
-			}
-
-			long tick = Settings.TICK_SPEED - (System.currentTimeMillis() - start);
-			if (tick > 0) {
-				try {
-					Thread.sleep(tick);
-				} catch (InterruptedException e) {
-					// Do nothing
-				}
-			}
+	public static TimeKeeper getInstance() {
+		if (instance == null) {
+			instance = new TimeKeeper();
 		}
+		return instance;
+	}
+
+	// -----
+	// TASKS
+	// -----
+
+	@Override
+	protected void tasks() {
+		checkAlarms();
+		checkTriggers();
+		checkGame();
 	}
 
 	/**
@@ -117,22 +115,9 @@ public final class TimeKeeper extends Thread {
 		}
 	}
 
-	// -------------------
-	// GETTERS AND SETTERS
-	// -------------------
-
-	/**
-	 * The method used to get the TimeKeeper.
-	 * 
-	 * @return TimeKeeper
-	 */
-
-	public static TimeKeeper getInstance() {
-		if (instance == null) {
-			instance = new TimeKeeper();
-		}
-		return instance;
-	}
+	// ---------
+	// UTILITIES
+	// ---------
 
 	/**
 	 * Adds an Alarm to the event list.
@@ -157,7 +142,7 @@ public final class TimeKeeper extends Thread {
 	/**
 	 * Adds a Trigger to the triggers list.
 	 * 
-	 * @param event
+	 * @param trigger
 	 */
 
 	public static synchronized void addTrigger(Trigger trigger) {
@@ -167,7 +152,7 @@ public final class TimeKeeper extends Thread {
 	/**
 	 * Removes a Trigger from the triggers list
 	 * 
-	 * @param event
+	 * @param trigger
 	 */
 
 	public static synchronized void removeTrigger(Trigger trigger) {
@@ -184,34 +169,12 @@ public final class TimeKeeper extends Thread {
 		return System.currentTimeMillis();
 	}
 
-	/**
-	 * @return whether or not the TimeKeeper is currently paused
-	 */
-
-	public static boolean isPaused() {
-		return paused;
-	}
-
-	/**
-	 * @param paused
-	 */
-
-	public static void setPaused(boolean paused) {
-		TimeKeeper.paused = paused;
-	}
-
-	/**
-	 * Returns whether or not TimeKeeper will clear finished alarms automatically
-	 * 
-	 * @return
-	 */
-
 	public static boolean isAutoClearAlarms() {
 		return autoClearAlarms;
 	}
 
 	/**
-	 * Sets whether or not TimeKeeper will clear finished alarms automatically
+	 * Sets whether TimeKeeper will clear finished alarms automatically
 	 * 
 	 * @param autoClearAlarms
 	 */
